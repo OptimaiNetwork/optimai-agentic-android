@@ -1,17 +1,95 @@
 # OptimAI Agentic for Android
 
-The Android app of OptimAI Agentic, written in Kotlin with Jetpack Compose. It lets you browse tokenized stocks, ask an AI agent about them and trade them from your own wallet.
+<p align="center">
+  <img src=".github/assets/banner.jpg" width="100%" alt="OptimAI Agentic for Android banner listing its features, beside the Stocks tab, the agent with Tesla technicals and the OptimAI Keyboard trade card in Telegram" />
+</p>
 
-Scope: **BNB Chain and bStocks only**. Trades go through PancakeSwap and are signed in **MetaMask** or **Trust Wallet**, connected over WalletConnect (Reown). There is no Solana, Phantom, Ondo or PreStocks support in this app.
+The Android app of OptimAI Agentic, written in Kotlin with Jetpack Compose. It lets you browse tokenized stocks, ask an AI agent about them and trade them from your own wallet. Built for **BNB Hack: Tokenized Stocks Edition** on **BNB Chain with bStocks**. Trades go through PancakeSwap and are signed in **MetaMask** or **Trust Wallet**, connected over WalletConnect (Reown).
+
+**[Download APK v1.0.0](https://github.com/OptimaiNetwork/optimai-agentic-android/releases/download/v1.0.0/OptimAI-Agentic-Android-1.0.0.apk)** |
+**[Chrome extension](https://github.com/OptimaiNetwork/optimai-agentic-extension)**
+
+## Quick start
+
+1. Install `OptimAI-Agentic-Android-1.0.0.apk` from the link above on a phone or emulator with Android 8.0 or newer (or `adb install OptimAI-Agentic-Android-1.0.0.apk`). The APK is signed with a debug certificate for sideloading, so uninstall any earlier build signed with a different key first.
+2. Open the app. The Stocks tab lists every bStock on BNB Chain.
+3. To trade, open **Settings**, tap **Connect Wallet** and approve in MetaMask or Trust Wallet on BNB Smart Chain.
+4. To use the keyboard, open **Settings > Extensions > OptimAI Keyboard**, turn it on and switch to it, then type `@optimai buy 50$ nvidia` in any chat.
+5. To trade from a post, share it from any app and pick **Trade with OptimAI**.
+
+To build it yourself, see [Build and run](#build-and-run).
 
 ## Features
 
-- **Main app**: the bStocks catalog with search, a detail screen per stock with charts and stats, an agent chat with technical analysis cards, a portfolio and an activity log, and a quote screen that runs the whole PancakeSwap flow (approve, swap, receipt).
-- **Share target**: share a post or a link from any app and pick "Trade with OptimAI" to open a buy quote for the stock it mentions.
-- **Custom keyboard**: the OptimAI Keyboard, a full keyboard with a live bStocks ticker toolbar on top. It recognises "@optimai ..." mentions on the device and can answer questions right inside the keyboard (see below).
-- **Wallet**: connect MetaMask or Trust Wallet through Reown. Every order is signed and broadcast by your wallet; the app never holds a key.
+The app ships four components: the main app, the OptimAI Keyboard, a share target and the wallet connection.
 
-## Setup
+### Stocks and charts
+
+The bStocks catalog with search, and a detail screen per stock with charts and stats.
+
+<p align="center">
+  <img src=".github/assets/detail.jpg" width="32%" alt="NVDA detail with chart, period changes and company overview" />
+</p>
+
+### Agent chat
+
+An agent chat with technical analysis cards. Ask for an order and it prepares a preview with a live quote.
+
+<p align="center">
+  <img src=".github/assets/agent-order.jpg" width="32%" alt="Agent preparing an order preview to buy Apple" />
+</p>
+
+### OptimAI Keyboard
+
+A full keyboard with a live bStocks ticker toolbar on top. Type "@optimai buy 50$ nvidia" in any chat and it shows a trade card; ask a question such as "@optimai recent news of nvidia?" and tap the glowing OptimAI logo to read the answer inside the keyboard.
+
+<p align="center">
+  <img src=".github/assets/keyboard-trade.jpg" width="32%" alt="Keyboard trade card for NVDAB inside Telegram" />
+</p>
+
+### Share target
+
+Share a post or a link from any app and pick "Trade with OptimAI". The app reads the post, lists the stocks it mentions and opens a buy quote.
+
+<p align="center">
+  <img src=".github/assets/share-quote.jpg" width="32%" alt="Stocks found in the shared post with a live quote" />
+</p>
+
+### Buy in your wallet
+
+A quote screen that runs the whole PancakeSwap flow (approve, swap, receipt). Connect MetaMask or Trust Wallet through Reown. Every order is signed and broadcast by your wallet; the app never holds a key.
+
+<p align="center">
+  <img src=".github/assets/buy-complete.jpg" width="32%" alt="Buy complete with the BscScan transaction link" />
+</p>
+
+### Portfolio and activity
+
+A portfolio and an activity log of every order, each with its BscScan link.
+
+<p align="center">
+  <img src=".github/assets/activity.jpg" width="32%" alt="Activity log of buys on BNB Chain" />
+</p>
+
+## How it works
+
+<details>
+<summary>The OptimAI Keyboard</summary>
+
+The keyboard is drawn from scratch to match the iOS system keyboard, using measurements taken from iOS 26 screenshots (keys of 33.5 by 43.3 pt, 6.67 pt gaps, 56 pt rows, key color `#3D3D3D` on `#171717`).
+
+- QWERTY, 123 and #+= layouts as on iOS. A letter is typed when the finger lifts; when a second finger lands, the first finger's letter is typed at once. Fingers can slide between keys, and sliding from "123" to a symbol and releasing types that one symbol and returns to letters.
+- An enlarged callout on press, and a long press on symbol keys to pick variants (for example currency signs and quotes).
+- Shift for one letter, double tap for caps lock, automatic capitals at the start of a sentence depending on the field, and double tap on space for ". ".
+- Holding delete removes characters, then whole words. Holding space moves the cursor like a trackpad.
+- The return key follows the field (`search`, `go`, `send` or `done` in blue, `↵` for a new line). Number fields open on the 123 layout.
+- Toolbar: a scrolling bStocks ticker, a banner and a trading card (From and To, swap direction, number pad, Buy or Sell opens the app's quote screen). It detects "@optimai ..." on the device using an alias table.
+
+Unlike iOS, the row with the globe and microphone under the keys is not drawn: on Android that space belongs to the system navigation bar (hide keyboard and switch keyboard). Typing sounds and vibration follow the system settings.
+
+</details>
+
+## Build and run
 
 Requirements:
 
@@ -30,8 +108,6 @@ Configure the build:
 
    It can also come from the `REOWN_PROJECT_ID` environment variable.
 
-## Build and run
-
 Start an emulator (Android Studio Device Manager) or connect a device with USB debugging on, then:
 
 ```bash
@@ -40,9 +116,7 @@ Start an emulator (Android Studio Device Manager) or connect a device with USB d
 
 If `java` is not on your path, point `JAVA_HOME` at the JDK bundled with Android Studio first. Gradle installs nothing without a running emulator or device.
 
-## Enable the keyboard
-
-In the app, open **Settings > Extensions > OptimAI Keyboard**, which jumps straight to the Android keyboard list. Or use adb:
+### Enable the keyboard with adb
 
 ```bash
 adb shell ime enable com.test.agenttrade/.keyboard.OptimAIKeyboardService
@@ -69,19 +143,6 @@ Notes for the emulator:
 | `wallet/` | WalletConnect (Reown) session and signing |
 | `data/` | API client, DTOs and user facing errors |
 | `ui/theme/`, `ui/components/` | Design system and shared components |
-
-## The keyboard
-
-The keyboard is drawn from scratch to match the iOS system keyboard, using measurements taken from iOS 26 screenshots (keys of 33.5 by 43.3 pt, 6.67 pt gaps, 56 pt rows, key color `#3D3D3D` on `#171717`).
-
-- QWERTY, 123 and #+= layouts as on iOS. A letter is typed when the finger lifts; when a second finger lands, the first finger's letter is typed at once. Fingers can slide between keys, and sliding from "123" to a symbol and releasing types that one symbol and returns to letters.
-- An enlarged callout on press, and a long press on symbol keys to pick variants (for example currency signs and quotes).
-- Shift for one letter, double tap for caps lock, automatic capitals at the start of a sentence depending on the field, and double tap on space for ". ".
-- Holding delete removes characters, then whole words. Holding space moves the cursor like a trackpad.
-- The return key follows the field (`search`, `go`, `send` or `done` in blue, `↵` for a new line). Number fields open on the 123 layout.
-- Toolbar: a scrolling bStocks ticker, a banner and a trading card (From and To, swap direction, number pad, Buy or Sell opens the app's quote screen). It detects "@optimai ..." on the device using an alias table. Ask "@optimai ...?" and tap the glowing logo to read the answer inside the keyboard.
-
-Unlike iOS, the row with the globe and microphone under the keys is not drawn: on Android that space belongs to the system navigation bar (hide keyboard and switch keyboard). Typing sounds and vibration follow the system settings.
 
 ## License
 
