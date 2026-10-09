@@ -1,0 +1,9 @@
+# Copy to local.properties (gitignored) and fill in.
+
+# Android SDK location. Android Studio writes this line for you. For command line
+# builds either uncomment and set it, or export ANDROID_HOME instead.
+#sdk.dir=/path/to/Android/sdk
+
+# Reown (WalletConnect) project id, required to connect a wallet.
+# Create one for free at https://cloud.reown.com
+reown.projectId=your-reown-project-id

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds only (this file replaces the main one for the debug variant).
+     A local OptimAI Agentic server runs over plain HTTP on the emulator host
+     (10.0.2.2), localhost through `adb reverse`, or a LAN address, so debug
+     builds allow cleartext. Release builds use the main config, HTTPS only. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
